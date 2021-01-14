@@ -1,8 +1,21 @@
 <template>
   <div>
-    <Nuxt />
+    <header>test header</header>
+    <Nuxt :foobar="'9999'"/>
   </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      a: {
+        c: 1
+      }
+    }
+  }
+}
+</script>
 
 <style>
 html {

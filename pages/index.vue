@@ -28,7 +28,28 @@
 </template>
 
 <script>
-export default {}
+export default {
+  key(route) {
+    console.info('============', route)
+    return route.fullPath
+  },
+
+  async fetch() {
+    // this.mountains = await fetch(
+    //   'api/mountains'
+    // ).then(res => res.json())
+  },
+  loading: {
+    continuous: true
+  },
+   mounted() {
+    console.info('=====mounted=======', this.route)
+    this.$nextTick(() => {
+      this.$nuxt.$loading.start()
+      setTimeout(() => this.$nuxt.$loading.finish(), 500)
+    })
+  }
+}
 </script>
 
 <style>
