@@ -37,6 +37,11 @@ export default {
       list: []
     }
   },
+  nuxtServerInit({ commit }, { app }) {
+    console.log('我在服务端执行了');
+    // 重新给用户存值
+    commit('user/init', 'store index token: 12345')
+  },
   async asyncData({$axios, ...args}) {
     console.info('=====================', args)
     const res = await $axios.get('/api/get-data?id=9999')
