@@ -12,16 +12,44 @@
       <li>Refresh the page for server side rendering.</li>
       <li>Click the links to see client side rendering.</li>
     </ul>
+
+    <div>
+      <button>999999999999999</button>
+      <my-button type="danger">
+        Danger
+      </my-button>
+    </div>
   </div>
 </template>
 
 <script>
+import { Button } from 'ant-design-vue';
+// import axios from 'axios'
+
+// console.info('******', Button)
+
 export default {
-  asyncData(...args) {
-    console.info('=====================', args)
+  components: {
+    'my-button': Button
+  },
+  data(){
     return {
-      rendering: process.server ? 'server' : 'client'
+      list: []
     }
+  },
+  async asyncData({$axios, ...args}) {
+    console.info('=====================', args)
+    const res = await $axios.get('/api/get-data?id=9999')
+    console.info('===res===', res)
+
+    return {
+      rendering: process.server ? 'server' : 'client',
+      list: res.data
+    }
+  },
+
+  mounted() {
+    console.info('*********mounted*********')
   }
 }
 </script>
