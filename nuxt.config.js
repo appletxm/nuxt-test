@@ -1,6 +1,8 @@
+import bodyParser from 'body-parser'
+
 export default {
   // Disable server-side rendering (https://go.nuxtjs.dev/ssr-mode)
-  ssr: false,
+  ssr: true,
 
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
@@ -21,6 +23,12 @@ export default {
     '~/assets/styles/index.less'
   ],
 
+  router: {
+    middleware: [
+      'auth'
+    ],
+  },
+
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
     '@/plugins/antd-ui',
@@ -31,8 +39,7 @@ export default {
   components: true,
 
   // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
-  buildModules: [
-  ],
+  buildModules: [],
 
   // Modules (https://go.nuxtjs.dev/config-modules)
   modules: [
@@ -40,6 +47,14 @@ export default {
   ],
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
-  build: {
-  }
+  build: {},
+
+  serverMiddleware: [
+    '~/server-middleware/express-app',
+    '~/server-middleware/logger',
+    bodyParser.urlencoded({extended: false}),
+    bodyParser.json(),
+    { path: '/api/user-info', handler: '~/server-middleware/user-info.js' },
+    { path: '/api/post-info', handler: '~/server-middleware/post-info.js' }
+  ]
 }

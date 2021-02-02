@@ -1,6 +1,6 @@
 <template>
   <div class="page-index">
-    <h1>Hello Nuxters! 👋</h1>
+    <h1> {{$store.state.testServerData}} Hello Nuxters! 👋 {{$store.state.counter}}</h1>
     <p>
       This page is rendered on the <strong>{{ rendering }}</strong>
     </p>
@@ -15,41 +15,50 @@
 
     <div>
       <button>999999999999999</button>
-      <my-button type="danger">
+      <a-button type="danger">
         Danger
-      </my-button>
+      </a-button>
+    </div>
+
+    <div class="render-data">
+      <a-table :columns="columns" :data-source="list">
+        <a slot="name" slot-scope="text">{{ text }}</a>
+      </a-table>
     </div>
   </div>
 </template>
 
 <script>
-import { Button } from 'ant-design-vue';
-// import axios from 'axios'
-
-// console.info('******', Button)
+import {columns} from '../models/common'
 
 export default {
-  components: {
-    'my-button': Button
-  },
+  // middleware: 'api/get-data',
+
   data(){
     return {
-      list: []
+      list: [],
+      columns,
     }
   },
-  nuxtServerInit({ commit }, { app }) {
-    console.log('我在服务端执行了');
-    // 重新给用户存值
-    commit('user/init', 'store index token: 12345')
-  },
+
   async asyncData({$axios, ...args}) {
-    console.info('=====================', args)
-    const res = await $axios.get('/api/get-data?id=9999')
-    console.info('===res===', res)
+    // console.info('=====================', args)
+    const res = await $axios.get('/api/user-info?', {
+      params: {
+        id: '9999'
+      }
+    })
+    // console.info('===res===', res.data.data)
+
+    const resPost = await $axios.post('/api/post-info', {
+      name: '123',
+      title: '7777'
+    })
 
     return {
       rendering: process.server ? 'server' : 'client',
-      list: res.data
+      list: res.data.data,
+      list2: resPost.data.data
     }
   },
 
