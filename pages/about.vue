@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h1>data from : {{rendering}}</h1>
+    <h1>Data rendering from : {{rendering}}</h1>
     <div class="render-data">
       <a-table :columns="columns" :data-source="list">
         <a slot="name" slot-scope="text">{{ text }}</a>
@@ -22,7 +22,7 @@ export default {
     }
   },
   async asyncData({$axios, ...args}) {
-    console.info('===========about page==========', args)
+    // console.info('===========about page==========', args)
     const res = await $axios.get('/api/user-info?', {
       params: {
         id: '9999'
@@ -48,7 +48,6 @@ export default {
 .container {
   margin: 0 auto;
   min-height: 100vh;
-  display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
@@ -66,7 +65,6 @@ h1 {
     Arial,
     sans-serif;
   display: block;
-  font-weight: 300;
   font-size: 20px;
   color: #35495e;
   letter-spacing: 1px;

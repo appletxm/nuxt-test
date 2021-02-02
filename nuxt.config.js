@@ -2,7 +2,8 @@ import bodyParser from 'body-parser'
 
 export default {
   // Disable server-side rendering (https://go.nuxtjs.dev/ssr-mode)
-  ssr: true,
+  // ssr: true,
+  // target: 'server',
 
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
